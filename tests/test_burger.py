@@ -61,7 +61,12 @@ class TestBurger:
         burger = Burger()
         burger.set_buns(mock_bun)
         burger.add_ingredient(mock_ing)
-        receipt = burger.get_receipt()
-        assert "(==== Булка ====)" in receipt
-        assert "= sauce Соус =" in receipt
-        assert "Price: 250.0" in receipt
+        receipt = burger.get_receipt().strip()
+        lines = [line.strip() for line in receipt.splitlines() if line.strip()]
+        expected_lines = [
+            "(==== Булка ====)",
+            "= sauce Соус =",
+            "(==== Булка ====)",
+            "Price: 250.0"
+        ]
+        assert lines == expected_lines
